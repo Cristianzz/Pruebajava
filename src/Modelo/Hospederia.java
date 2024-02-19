@@ -25,9 +25,9 @@ public abstract class Hospederia extends MedioDeAlojamiento{
 
     @Override
     public int subTotal() {
-        return Math.round(this.cantidadNoches*incrementaValorBase());
+        return Math.round(this.cantidadNoches*getValorBaseNoche());
     }
-
+    public int cobroExtraporNoches(){return Math.round(this.cantidadNoches*incrementaValorBase());}
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }

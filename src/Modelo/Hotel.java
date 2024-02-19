@@ -21,7 +21,7 @@ public class Hotel extends Hospederia{
     public int adicional() {
         int adicional=0;
 
-        if (this.fumador || desayuno){
+        if (this.fumador && desayuno){
             adicional = Math.round(this.subTotal() * 30 / 100);
         }
         return adicional;

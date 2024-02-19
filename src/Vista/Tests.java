@@ -23,13 +23,19 @@ public class Tests {
 
         System.out.println("La cantidad de calzados es: "+ alojamiento.getMedioAlojamiento().size());
 
-        alojamiento.ingresarCabania(tipocabagna);
+        alojamiento.ingresarCabagna(tipocabagna);
 
         System.out.println("La cantidad de calzados es: "+ alojamiento.getMedioAlojamiento().size());
 
-        alojamiento.ingresarCabania(tipocabagna1);
+        alojamiento.ingresarCabagna(tipocabagna1);
 
         System.out.println("La cantidad de calzados es: "+ alojamiento.getMedioAlojamiento().size());
+
+        alojamiento.totalAdicional();
+
+        System.out.println("EL adicional es: "+alojamiento.totalAdicional()) ;
+
+
 
     }
 }

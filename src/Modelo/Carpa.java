@@ -22,6 +22,9 @@ public class Carpa extends MedioDeAlojamiento{
     }
 
     @Override
+    public int cobroExtraporNoches() { return 0;}
+
+    @Override
     public int valorACancelar() {
         int valorAcancelar;
 

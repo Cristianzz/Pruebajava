@@ -47,7 +47,7 @@ public abstract class MedioDeAlojamiento {
     }
 
     public abstract int subTotal ();
-
+    public abstract int cobroExtraporNoches();
     public int bonoDescuento (){
         int bono = 0;
 
@@ -55,6 +55,8 @@ public abstract class MedioDeAlojamiento {
             bono = (int) Math.round(this.subTotal() * 0.25);
         } else if (this.TipoTemporada.equalsIgnoreCase("Media")) {
             bono = (int) Math.round(this.subTotal() * 0.125);
+        }else if(this.getTipoTemporada().equalsIgnoreCase("alta")) {
+            bono = 0;
         }
         return bono;
     }
