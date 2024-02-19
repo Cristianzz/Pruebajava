@@ -21,9 +21,42 @@ public class App {
                     DNIcliente = pideDNI();
 
                     if (alojamiento.buscarAlojamiento(DNIcliente)==-1){
-                        System.out.println("Ingrese nombre del cliente: "); String nombre = Leer.dato();
-                        System.out.println("¿Cantidad de noches? "); int noches = Leer.datoInt();
-                        System.out.println("¿Valor base noche? "); int valorBase = Leer.datoInt();
+                        System.out.println("Ingrese nombre del cliente: ");
+                        String nombre;
+                        do {
+                            nombre = Leer.dato();
+
+                            if (Validador.contieneNumeros(nombre)) {
+                                System.out.println("Error: Por favor, ingrese un nombre válido sin números.");
+                                System.out.println("Ingrese nombre del cliente: ");
+                            }
+                        } while (Validador.contieneNumeros(nombre));
+
+                        System.out.println("¿Cantidad de noches? ");
+                        int noches;
+                        do {
+                            String inputNoches = Leer.dato();
+                            if (Validador.esNumeroNegativo(inputNoches)) {
+                                noches = Integer.parseInt(inputNoches);
+                                break;
+                            } else {
+                                System.out.println("Error: No puede ingresar números negativos.");
+                                System.out.println("¿Cantidad de noches? ");
+                            }
+                        } while (true);
+
+                        System.out.println("¿Valor base noche? ");
+                        int valorBase;
+                        do {
+                            String inputValorBase = Leer.dato();
+                            if (Validador.esNumeroNegativo(inputValorBase)) {
+                                valorBase = Integer.parseInt(inputValorBase);
+                                break;
+                            } else {
+                                System.out.println("Error: No puede ingresar números negativos.");
+                                System.out.println("¿Valor base noche? ");
+                            }
+                        } while (true);
 
                         String temporada;
                         do {
@@ -41,21 +74,72 @@ public class App {
                             respuesta = Leer.datoInt(); //3
                         }while(respuesta< 1 || respuesta > 3);
 
-
                         if (respuesta ==1){
-                            System.out.println("Cantidad de personas"); int cantidad=Leer.datoInt();
-                            alojamiento.ingresarCarpa(new Carpa(valorBase,noches,temporada,new DatosCliente(nombre,DNIcliente),noches));
+                            System.out.println("Cantidad de personas");
+                            int cantidad;
+                            do {
+                                cantidad = Leer.datoInt();
+                                if (cantidad <= 0) {
+                                    System.out.println("Error: Por favor, ingrese una cantidad de personas válida.");
+                                    System.out.println("Cantidad de personas");
+                                }
+                            } while (cantidad <= 0);
+
+                            alojamiento.ingresarCarpa(new Carpa(valorBase, noches, temporada, new DatosCliente(nombre, DNIcliente), cantidad));
                             System.out.println("Registro exitoso del alojamiento");
                         }else {
-                            System.out.println("¿Es fumador (true / false)?"); boolean fumador = Leer.datoBoolean();
-                            System.out.println("Capacidad"); int capacidad=Leer.datoInt();
+                            System.out.println("¿Es fumador (true / false)?");
+                            boolean fumador;
+                            do {
+                                String input = Leer.dato();
+                                if (Validador.esBooleano(input)) {
+                                    fumador = Boolean.parseBoolean(input);
+                                    break;
+                                } else {
+                                    System.out.println("Error: Por favor, ingrese 'true' o 'false'.");
+                                    System.out.println("¿Es fumador (true / false)?");
+                                }
+                            } while (true);
+
+                            System.out.println("Capacidad: ");
+                            int capacidad;
+                            do {
+                                capacidad = Leer.datoInt();
+                                if (capacidad <= 0) {
+                                    System.out.println("Error: Por favor, ingrese una capacidad válida.");
+                                    System.out.println("Capacidad: ");
+                                }
+                            } while (capacidad <= 0);
                             if (respuesta == 2){
-                                System.out.println("¿Con desayuno (true / false)?"); boolean desayuno = Leer.datoBoolean();
-                                alojamiento.ingresarHotel(new Hotel(valorBase,noches,temporada,new DatosCliente(nombre,DNIcliente),fumador,capacidad,desayuno));
+                                System.out.println("¿Con desayuno (true / false)?");
+                                boolean desayuno;
+                                do {
+                                    String input = Leer.dato();
+                                    if (Validador.esBooleano(input)) {
+                                        desayuno = Boolean.parseBoolean(input);
+                                        break;
+                                    } else {
+                                        System.out.println("Error: Por favor, ingrese 'true' o 'false'.");
+                                    }
+                                } while (true);
+
+                                alojamiento.ingresarHotel(new Hotel(valorBase, noches, temporada, new DatosCliente(nombre, DNIcliente), fumador, capacidad, desayuno));
                                 System.out.println("Registro exitoso del alojamiento");
                             }else {
-                                System.out.println("¿Con chimenea (true / false)?");boolean chimenea = Leer.datoBoolean();
-                                alojamiento.ingresarCabagna(new Cabagna(valorBase,noches,temporada,new DatosCliente(nombre,DNIcliente),fumador,capacidad,chimenea));
+                                System.out.println("¿Con chimenea (true / false)?");
+                                boolean chimenea;
+                                do {
+                                    String input = Leer.dato();
+                                    if (Validador.esBooleano(input)) {
+                                        chimenea = Boolean.parseBoolean(input);
+                                        break;
+                                    } else {
+                                        System.out.println("Error: Por favor, ingrese 'true' o 'false'.");
+                                        System.out.println("¿Con chimenea (true / false)?");
+                                    }
+                                } while (true);
+
+                                alojamiento.ingresarCabagna(new Cabagna(valorBase, noches, temporada, new DatosCliente(nombre, DNIcliente), fumador, capacidad, chimenea));
                                 System.out.println("Registro exitoso del alojamiento");
                             }
 
@@ -103,10 +187,25 @@ public class App {
         }while(opcion!=9);
     }
 
-    public static int pideDNI(){
-        System.out.println("Favor ingrese DNI del cliente");
-        return Leer.datoInt();
+    public static int pideDNI() {
+        int DNIcliente;
+        do {
+            System.out.println("Favor ingrese DNI del cliente");
+            String DNIclienteStr = Leer.dato();
+
+            // Validación para asegurar que el DNI sea numérico
+            if (!Validador.esNumero(DNIclienteStr)) {
+                System.out.println("Error: Por favor, ingrese un DNI numérico.");
+                continue;
+            }
+
+            DNIcliente = Integer.parseInt(DNIclienteStr);
+            break;
+        } while (true);
+
+        return DNIcliente;
     }
+
 
     public static int menu(){
         System.out.println("\n ------------ Servicio de Hoteleria -------------");
